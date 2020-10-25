@@ -1,26 +1,18 @@
 const enemy = -1;
 const you = 1;
 
-let boardSize = 4;
+let boardSize = 6;
 let board;
 
 board = createBoard();
+generateRandomBoard();
+bestMove();
 showBoard(board);
-makeMove(you,2,2);
-bestMove();
-bestMove();
-bestMove();
-bestMove();
-bestMove();
-bestMove();
-console.log("----------------");
-showBoard(board);
-
 
 
 function minimax(node, depth, isMaximazing)
 {
-    if(depth == 0 || checkPlayerWin(node))
+    if(depth == -1 || checkPlayerWin(node))
     {
         return calculate(node);
     }
@@ -86,26 +78,22 @@ function bestMove()
                 })
 
                 boardTMP[x][y] = 1; // do tego momentu działa dobrze
-                score = minimax(boardTMP,2,true);
-
+                score = minimax(boardTMP,3,true);
+                console.log(score);
                 if(score > bestScore)
                 {
-                    console.log(score);
                     bestScore = score;
                     bestMove = [x, y];
                 }
             }
         }
     }
-
     makeMove(you, bestMove[0], bestMove[1]);
-
 }
 
 
 function calculate(node)
 {
-    
     let cost = 0;
     let inOneColumn = 0;
     let enemyInOneColumn = 0;
@@ -117,7 +105,7 @@ function calculate(node)
         for(let y = 0; y < boardSize; y++)
         {
             if(node[x][y] == 1) inOneColumn++; 
-            if(node[x][y] == -1)  enemyInOneColumn++;
+            if(node[y][x] == -1)  enemyInOneColumn++;
         }  
             
         if(inOneColumn > bestPlayerColumn) bestPlayerColumn = inOneColumn;
@@ -125,10 +113,10 @@ function calculate(node)
         inOneColumn = 0;
         enemyInOneColumn = 0;
     }
-    //console.log(bestPlayerColumn);
-    if(checkPlayerWin(node)) cost += 100;
+
+    
     cost = bestPlayerColumn;
-    cost -= worstEnemyColumn;
+    cost += worstEnemyColumn;
     return cost;
 }
 
@@ -170,8 +158,6 @@ function makeMove(player, x, y)
 {
     board[x][y] = player;
 }
-
-
 
 function checkPlayerWin(board)
 {   
@@ -262,4 +248,22 @@ function checkAround(x,y,path,board)
         }       
     } 
 }
+}
+
+
+function generateRandomBoard()
+{
+ do
+ {
+    for(let x = 0; x < boardSize; x++)
+    {
+        for(let y = 0; y < boardSize; y++)
+        {
+            board[x][y] = Math.floor((Math.random()*3)-1);
+        }
+    } 
+
+ }
+ while(checkPlayerWin(board))
+      
 }
