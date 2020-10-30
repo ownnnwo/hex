@@ -12,7 +12,7 @@ showBoard(board);
 
 function minimax(node, depth, isMaximazing)
 {
-    if(depth == -1 || checkPlayerWin(node))
+    if(depth == 0 || checkPlayerWin(node))
     {
         return calculate(node);
     }
