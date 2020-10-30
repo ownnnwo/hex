@@ -52,7 +52,7 @@ function minimax(node, depth, isMaximazing)
                     return tab.slice();
                 })
                     boardTMP[x][y] = -1;
-                    value = Math.max(value, minimax(boardTMP, depth-1, true));
+                    value = Math.min(value, minimax(boardTMP, depth-1, true));
                 }
             }
         }
