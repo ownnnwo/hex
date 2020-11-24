@@ -4,10 +4,12 @@ evaluate(root);
 setProofAndDisproofNumbers(root);
 let mostProving
 let current = root;
-while(root.proof != 0 && root.disproof != 0 && resourceAvailable()){
+let counter = 0;
+while(root.proof != 0 && root.disproof != 0 && counter < 20){
     mostProving = selectMostProvingNode();
     expandNode(mostProving);
     current = updateAncestors(mostProving, root);
+    counter++;
 }
 }
 
