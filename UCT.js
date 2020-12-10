@@ -1,4 +1,4 @@
-function UTCSearch(root) {
+function UCTSearch(root) {
   let current = root;
   let reward;
   while (resourcesAvailable) {
